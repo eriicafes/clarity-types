@@ -21,3 +21,7 @@ clarity-types contracts/gm.clar --traits-dir="contracts/.cache/requirements"
 # specify typescript type name
 clarity-types contracts/gm.clar --type-name GmContract
 ```
+
+## Authors
+
+- [@eriicafes](https://www.github.com/eriicafes)
