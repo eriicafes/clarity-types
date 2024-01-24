@@ -1,5 +1,10 @@
 [workspace]
 resolver = "2"
 members = [
-    "clarity-types"
+    "clarity-types",
+    "native",
 ]
+
+[profile.release]
+lto = true
+strip = "symbols"

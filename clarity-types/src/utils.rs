@@ -1,11 +1,11 @@
 pub fn capitalize(s: &str) -> String {
-    let mut c = s.chars();
-    match c.next() {
-        None => String::new(),
-        Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
-    }
+  let mut c = s.chars();
+  match c.next() {
+    None => String::new(),
+    Some(f) => f.to_uppercase().collect::<String>() + c.as_str(),
+  }
 }
 
 pub fn to_pascal_case(s: &str) -> String {
-    s.split("-").map(capitalize).collect::<String>()
+  s.split("-").map(capitalize).collect::<String>()
 }

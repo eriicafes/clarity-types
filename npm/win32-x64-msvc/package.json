@@ -1,0 +1,19 @@
+{
+  "name": "@clarity-types/clarity-types-win32-x64-msvc",
+  "version": "0.1.0",
+  "os": [
+    "win32"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "clarity-types.win32-x64-msvc.node",
+  "files": [
+    "clarity-types.win32-x64-msvc.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "git+https://github.com/eriicafes/clarity-types.git"
+}
