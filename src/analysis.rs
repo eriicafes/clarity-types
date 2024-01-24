@@ -1,6 +1,6 @@
-use std::{fs, path::PathBuf};
-
+use clarity::types::StacksEpochId;
 use clarity::vm::{
+    analysis::AnalysisDatabase,
     analysis::{run_analysis, ContractAnalysis},
     ast::build_ast_with_diagnostics,
     costs::LimitedCostTracker,
@@ -9,7 +9,7 @@ use clarity::vm::{
     types::QualifiedContractIdentifier,
     ClarityVersion,
 };
-use clarity::{types::StacksEpochId, vm::analysis::AnalysisDatabase};
+use std::{fmt, fmt::Display, fs, path::PathBuf};
 
 enum Failure {
     Read,
@@ -24,11 +24,22 @@ pub struct Error {
     pub diagnostics: Option<Vec<Diagnostic>>,
 }
 
+impl Display for Error {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        if let Some(diagnostics) = &self.diagnostics {
+            for diagnostic in diagnostics {
+                writeln!(f, "{diagnostic}")?
+            }
+        }
+        writeln!(f, "{}: {} at {:?}", self.message, self.name, self.path)
+    }
+}
+
 pub fn run(
-    contract_name: &str,
     path: &PathBuf,
-    impl_trait_dir: Option<PathBuf>,
+    contract_name: &str,
     clarity_version: ClarityVersion,
+    trait_dir: Option<PathBuf>,
 ) -> Result<ContractAnalysis, Error> {
     let contract_identifier = QualifiedContractIdentifier::transient();
     let epoch = StacksEpochId::latest();
@@ -40,32 +51,32 @@ pub fn run(
     // create the root context here
     analysis_db.execute(|db| {
         run_with_impl_traits(
-            contract_name,
             path,
-            impl_trait_dir,
+            contract_name,
+            clarity_version,
+            trait_dir,
             &contract_identifier,
             db,
             cost_tracker,
-            clarity_version,
             epoch,
         )
     })
 }
 
 fn run_with_impl_traits(
-    name: &str,
     path: &PathBuf,
-    impl_trait_dir: Option<PathBuf>,
+    contract_name: &str,
+    clarity_version: ClarityVersion,
+    trait_dir: Option<PathBuf>,
     identifier: &QualifiedContractIdentifier,
     analysis_db: &mut AnalysisDatabase,
     mut cost_tracker: LimitedCostTracker,
-    clarity_version: ClarityVersion,
     epoch: StacksEpochId,
 ) -> Result<ContractAnalysis, Error> {
     // read contract file
     let contents = fs::read_to_string(path).map_err(|e| Error {
         failure: Failure::Read,
-        name: name.to_string(),
+        name: contract_name.to_string(),
         message: format!("Unable to read contract: {}", e),
         path: path.clone(),
         diagnostics: None,
@@ -83,7 +94,7 @@ fn run_with_impl_traits(
     if !success {
         return Err(Error {
             failure: Failure::Parse,
-            name: name.to_string(),
+            name: contract_name.to_string(),
             message: "Unable to parse contract".to_owned(),
             path: path.clone(),
             diagnostics: Some(diagnostics),
@@ -91,20 +102,19 @@ fn run_with_impl_traits(
     }
 
     // load implemented traits
-    if let Some(impl_trait_dir) = impl_trait_dir {
+    if let Some(trait_dir) = trait_dir {
         for trait_identifier in ast.implemented_traits.clone() {
-            let mut trait_path = impl_trait_dir.clone();
+            let mut trait_path = trait_dir.clone();
             trait_path.push(format!("{}.clar", &trait_identifier.contract_identifier));
 
             if let Err(mut err) = run_with_impl_traits(
-                &trait_identifier.name,
                 &trait_path,
-                // assumption is traits do not implement other traits
-                None,
+                &trait_identifier.name,
+                clarity_version,
+                None, // assumption is traits do not implement other traits
                 &trait_identifier.contract_identifier,
                 analysis_db,
                 cost_tracker.clone(),
-                clarity_version,
                 epoch,
             ) {
                 err.message = match err.failure {
@@ -131,7 +141,7 @@ fn run_with_impl_traits(
         diagnostics.push(Diagnostic::err(&e.err));
         Error {
             failure: Failure::Parse,
-            name: name.to_string(),
+            name: contract_name.to_string(),
             message: "Unable to parse contract".to_owned(),
             path: path.clone(),
             diagnostics: Some(diagnostics),

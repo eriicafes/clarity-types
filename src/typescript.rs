@@ -1,5 +1,8 @@
-use clarity::vm::types::{FunctionType, SequenceSubtype, StringSubtype, TypeSignature};
-use std::collections::BTreeSet;
+use clarity::vm::{
+    types::{FunctionType, SequenceSubtype, StringSubtype, TypeSignature},
+    ClarityName,
+};
+use std::collections::{BTreeMap, BTreeSet};
 
 use crate::utils;
 
@@ -23,96 +26,76 @@ trait IntoTypescriptType {
     fn into_ts_type(&self, reporter: &mut Reporter) -> String;
 }
 
-pub struct Parser {
-    name: String,
-    readonly_fns: Vec<(String, FunctionType)>,
-    public_fns: Vec<(String, FunctionType)>,
-}
+pub fn build_types(
+    name: &str,
+    readonly_fns: &BTreeMap<ClarityName, FunctionType>,
+    public_fns: &BTreeMap<ClarityName, FunctionType>,
+) -> String {
+    let mut reporter = Reporter::default();
 
-impl Parser {
-    pub fn new(name: String) -> Self {
-        Self {
-            name,
-            readonly_fns: Vec::new(),
-            public_fns: Vec::new(),
-        }
-    }
+    let readonly_fns = readonly_fns
+        .iter()
+        .map::<String, _>(|fn_def| fn_def.into_ts_type(&mut reporter))
+        .collect::<Vec<String>>()
+        .join("\n");
+    let public_fns = public_fns
+        .iter()
+        .map::<String, _>(|fn_def| fn_def.into_ts_type(&mut reporter))
+        .collect::<Vec<String>>()
+        .join("\n");
 
-    pub fn add_readonly_fn(&mut self, fn_name: String, fn_type: FunctionType) {
-        self.readonly_fns.push((fn_name, fn_type))
-    }
-
-    pub fn add_public_fn(&mut self, fn_name: String, fn_type: FunctionType) {
-        self.public_fns.push((fn_name, fn_type))
-    }
-
-    pub fn parse(&self) -> String {
-        let mut reporter = Reporter::default();
-
-        let readonly_fns = self
-            .readonly_fns
-            .iter()
-            .map::<String, _>(|fn_def| fn_def.into_ts_type(&mut reporter))
-            .collect::<Vec<String>>()
-            .join("\n");
-        let public_fns = self
-            .public_fns
-            .iter()
-            .map::<String, _>(|fn_def| fn_def.into_ts_type(&mut reporter))
-            .collect::<Vec<String>>()
-            .join("\n");
-
-        // build import statement
-        let mut contents = match reporter.imports.len() {
-            0 => String::new(),
-            len => {
-                let imports = reporter.imports.into_iter().collect::<Vec<String>>();
-                match len {
-                    len if len > 8 => {
-                        format!(
-                            "import {{\n\t{},\n}} from \"@stacks/transactions\"\n\n",
-                            imports.join(",\n\t")
-                        )
-                    }
-                    _ => {
-                        format!(
-                            "import {{ {} }} from \"@stacks/transactions\"\n\n",
-                            imports.join(", ")
-                        )
-                    }
+    // build import statement
+    let mut contents = match reporter.imports.len() {
+        0 => String::new(),
+        len => {
+            let imports = reporter.imports.into_iter().collect::<Vec<String>>();
+            match len {
+                len if len > 8 => {
+                    format!(
+                        "import {{\n\t{},\n}} from \"@stacks/transactions\"\n\n",
+                        imports.join(",\n\t")
+                    )
+                }
+                _ => {
+                    format!(
+                        "import {{ {} }} from \"@stacks/transactions\"\n\n",
+                        imports.join(", ")
+                    )
                 }
             }
-        };
+        }
+    };
 
-        // add readonly functions
-        if !self.readonly_fns.is_empty() {
-            contents.push_str("// readonly functions\n");
-            contents.push_str(&readonly_fns);
-            contents.push_str("\n");
-        }
-        // add public function
-        if !self.public_fns.is_empty() {
-            contents.push_str("// public functions\n");
-            contents.push_str(&public_fns);
-            contents.push_str("\n");
-        }
-        // add union type export
-        if !self.readonly_fns.is_empty() || !self.public_fns.is_empty() {
-            let union_type = format!(
-                "export type {}Contract = {}",
-                &self.name,
-                reporter.fn_names.join(" | ")
-            );
-            contents.push_str("// contract type\n");
-            contents.push_str(&union_type);
-            contents.push_str("\n");
-        }
-
-        contents
+    // add readonly functions
+    if !readonly_fns.is_empty() {
+        contents.push_str("// readonly functions\n");
+        contents.push_str(&readonly_fns);
+        contents.push_str("\n");
     }
+    // add public function
+    if !public_fns.is_empty() {
+        contents.push_str("// public functions\n");
+        contents.push_str(&public_fns);
+        contents.push_str("\n");
+    }
+    // add union type export
+    let union_type = format!(
+        "export type {}Contract = {}",
+        name,
+        reporter
+            .fn_names
+            .is_empty()
+            .then_some("never")
+            .unwrap_or(&reporter.fn_names.join(" | ")),
+    );
+    contents.push_str("// contract type\n");
+    contents.push_str(&union_type);
+    contents.push_str("\n");
+
+    contents
 }
 
-impl IntoTypescriptType for (String, FunctionType) {
+impl IntoTypescriptType for (&ClarityName, &FunctionType) {
     fn into_ts_type(&self, reporter: &mut Reporter) -> String {
         let (fn_name, fn_type) = self;
 

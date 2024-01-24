@@ -2,15 +2,10 @@ use clap::{
     builder::{PossibleValuesParser, TypedValueParser},
     Parser, ValueHint,
 };
-use clarity::vm::ClarityVersion;
-use std::{
-    fs,
-    path::{Path, PathBuf},
-    process,
-};
+use std::{fs, path::PathBuf, process};
 
-mod analysis;
-mod typescript;
+use clarity_types::{parse, ClarityVersion};
+
 mod utils;
 
 #[derive(Parser)]
@@ -58,53 +53,20 @@ fn main() {
     let dest = args
         .output
         .unwrap_or_else(|| args.input.with_extension("ts"));
-    let trait_dir = args.trait_dir.unwrap_or_else(|| {
-        let mut dir = args
-            .input
-            .parent()
-            .and_then(Path::parent)
-            .map(Path::to_owned)
-            .unwrap_or_default();
-        dir.push(".cache/requirements");
-        dir
-    });
     let clarity_version = args.clarity_version.unwrap_or(ClarityVersion::Clarity2);
     let contract_name = args.type_name.unwrap_or_else(|| {
         args.input.file_stem().and_then(|s| s.to_str()).map(utils::to_pascal_case)
             .expect("Failed to get contract name! try passing the contract name with an option flag eg: `--type-name=Contract`")
     });
 
-    // run contract analysis
-    let contract_analysis = analysis::run(
-        &contract_name,
-        &args.input,
-        Some(trait_dir),
-        clarity_version,
-    )
-    .unwrap_or_else(|err| {
-        if let Some(diagnostics) = err.diagnostics {
-            for diagnostic in diagnostics {
-                eprintln!("{diagnostic}");
-            }
-        }
-        eprintln!("{}: {} at {:?}", err.message, err.name, err.path);
+    // build typescript types
+    let result = parse(&args.input, &contract_name, clarity_version, None).unwrap_or_else(|err| {
+        eprintln!("{err}");
         process::exit(1)
     });
 
-    // init typescript parser
-    let mut ts_parser = typescript::Parser::new(contract_name);
-
-    // add readonly and public functions
-    for (name, fn_type) in contract_analysis.read_only_function_types {
-        ts_parser.add_readonly_fn(name.to_string(), fn_type);
-    }
-    for (name, fn_type) in contract_analysis.public_function_types {
-        ts_parser.add_public_fn(name.to_string(), fn_type);
-    }
-
     // write typescript file
-    let dest_contents = ts_parser.parse();
-    match fs::write(&dest, dest_contents) {
+    match fs::write(&dest, result) {
         Ok(_) => println!("Created typescript file at {dest:?}"),
         Err(err) => {
             eprintln!("Failed to create typescript file: {}", err);
