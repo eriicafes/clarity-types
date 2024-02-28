@@ -11,7 +11,7 @@ mod utils;
 #[derive(Parser)]
 #[command(
   version,
-  name = "Clarity Gen",
+  name = "clarity-types",
   about = "Generate typescript types from clarity contract"
 )]
 #[command(arg_required_else_help = true)]
