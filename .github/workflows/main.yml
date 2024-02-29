@@ -44,9 +44,9 @@ jobs:
               SYSROOT=$(xcrun --sdk macosx --show-sdk-path);
               export CFLAGS="-isysroot $SYSROOT -isystem $SYSROOT";
               pnpm --filter @clarity-types/core build --target aarch64-apple-darwin
-          - host: ubuntu-latest
-            target: aarch64-unknown-linux-gnu
-            build: pnpm --filter @clarity-types/core build --target aarch64-unknown-linux-gnu --use-napi-cross
+          # - host: ubuntu-latest
+          #   target: aarch64-unknown-linux-gnu
+          #   build: pnpm --filter @clarity-types/core build --target aarch64-unknown-linux-gnu --use-napi-cross
           # - host: ubuntu-latest
           #   target: armv7-unknown-linux-gnueabihf
           #   build: pnpm --filter @clarity-types/core build --target armv7-unknown-linux-gnueabihf --use-napi-cross
@@ -100,10 +100,6 @@ jobs:
         run: ${{ matrix.settings.setup }}
         if: ${{ matrix.settings.setup }}
         shell: bash
-      - name: Install gcclib
-        if: matrix.settings.target == 'aarch64-unknown-linux-gnu'
-        run: sudo apt-get install gcc-multilib
-        shell: bash
       - name: Install dependencies
         run: pnpm install
       - name: Setup node x86
@@ -152,6 +148,7 @@ jobs:
           run: |
             sudo pkg install -y -f curl node libnghttp2 npm
             sudo npm install -g corepack
+            sudo apt-get install libclang-dev
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
             corepack prepare
