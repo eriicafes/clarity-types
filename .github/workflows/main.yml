@@ -146,7 +146,9 @@ jobs:
           environment_variables: 'DEBUG RUSTUP_IO_THREADS'
           shell: bash
           run: |
-            sudo pkg install -y -f curl node libnghttp2 npm libclang-dev
+            sudo pkg install -y -f curl node libnghttp2 npm llvm
+            echo "verifying libclang installation"
+            ldconfig -r | grep libclang
             sudo npm install -g corepack
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
