@@ -148,10 +148,18 @@ jobs:
           run: |
             sudo pkg install -y -f curl node libnghttp2 npm llvm
             echo "verifying libclang installation"
+            echo "print LD_LIBRARY_PATH"
             ldconfig -r | grep libclang
+            echo path $LD_LIBRARY_PATH
+            export LD_LIBRARY_PATH=/path/to/your/lib:$(ldconfig -r | grep libclang | tr -d '\n')
+            sudo ldconfig
+            echo "print updated LD_LIBRARY_PATH"
+            ldconfig -r | grep libclang
+            echo path $LD_LIBRARY_PATH
             sudo npm install -g corepack
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
+            rustup component add rustfmt
             corepack prepare
             corepack enable
             source "$HOME/.cargo/env"
