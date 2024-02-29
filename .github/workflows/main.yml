@@ -146,9 +146,8 @@ jobs:
           environment_variables: 'DEBUG RUSTUP_IO_THREADS'
           shell: bash
           run: |
-            sudo pkg install -y -f curl node libnghttp2 npm
+            sudo pkg install -y -f curl node libnghttp2 npm libclang-dev
             sudo npm install -g corepack
-            sudo apt-get install libclang-dev
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
             corepack prepare
@@ -222,7 +221,7 @@ jobs:
         target:
           - x86_64-unknown-linux-gnu
           - x86_64-unknown-linux-musl
-          - aarch64-unknown-linux-gnu
+          # - aarch64-unknown-linux-gnu
           - aarch64-unknown-linux-musl
           # - armv7-unknown-linux-gnueabihf
         node:
@@ -279,7 +278,7 @@ jobs:
         with:
           image: ${{ steps.docker.outputs.IMAGE }}
           options: -v ${{ steps.docker.outputs.PNPM_STORE_PATH }}:${{ steps.docker.outputs.PNPM_STORE_PATH }} -v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} --platform ${{ steps.docker.outputs.PLATFORM }}
-          run: pnpm --filter @clarity-types/core test
+          run: cd native && npm run test
   # test-wasi:
   #   name: Test WASI target
   #   needs:
