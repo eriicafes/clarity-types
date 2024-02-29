@@ -1,5 +1,5 @@
 [package]
-name = "native"
+name = "clarity-types-native"
 version = "0.1.0"
 edition = "2021"
 
@@ -7,10 +7,9 @@ edition = "2021"
 crate-type = ["cdylib"]
 
 [dependencies]
-# Default enable napi4 feature, see https://nodejs.org/api/n-api.html#node-api-version-matrix
-napi = { version = "2.12.2", default-features = false, features = ["napi4"] }
-napi-derive = "2.12.2"
+napi = "2"
+napi-derive = "2"
 clarity-types = { path = "../clarity-types" }
 
 [build-dependencies]
-napi-build = "2.0.1"
+napi-build = "2"

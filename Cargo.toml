@@ -8,3 +8,6 @@ members = [
 [profile.release]
 lto = true
 strip = "symbols"
+
+[profile.release.package.clarity-types-native]
+codegen-units = 1

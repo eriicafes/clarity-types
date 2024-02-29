@@ -451,6 +451,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "clarity-types-native"
+version = "0.1.0"
+dependencies = [
+ "clarity-types",
+ "napi",
+ "napi-build",
+ "napi-derive",
+]
+
+[[package]]
 name = "clear_on_drop"
 version = "0.2.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1418,16 +1428,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2503fa6af34dc83fb74888df8b22afe933b58d37daf7d80424b1c60c68196b8b"
 dependencies = [
  "libloading",
-]
-
-[[package]]
-name = "native"
-version = "0.1.0"
-dependencies = [
- "clarity-types",
- "napi",
- "napi-build",
- "napi-derive",
 ]
 
 [[package]]
