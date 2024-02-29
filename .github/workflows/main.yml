@@ -159,7 +159,6 @@ jobs:
             sudo npm install -g corepack
             curl https://sh.rustup.rs -sSf --output rustup.sh
             sh rustup.sh -y --profile minimal --default-toolchain beta
-            rustup component add rustfmt
             corepack prepare
             corepack enable
             source "$HOME/.cargo/env"
