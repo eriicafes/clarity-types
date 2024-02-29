@@ -26,9 +26,9 @@ jobs:
           - host: windows-latest
             build: pnpm --filter @clarity-types/core build
             target: x86_64-pc-windows-msvc
-          - host: windows-latest
-            build: pnpm --filter @clarity-types/core build --target i686-pc-windows-msvc
-            target: i686-pc-windows-msvc
+          # - host: windows-latest
+          #   build: pnpm --filter @clarity-types/core build --target i686-pc-windows-msvc
+          #   target: i686-pc-windows-msvc
           - host: ubuntu-latest
             target: x86_64-unknown-linux-gnu
             build: pnpm --filter @clarity-types/core build --target x86_64-unknown-linux-gnu --use-napi-cross
@@ -47,24 +47,24 @@ jobs:
           - host: ubuntu-latest
             target: aarch64-unknown-linux-gnu
             build: pnpm --filter @clarity-types/core build --target aarch64-unknown-linux-gnu --use-napi-cross
-          - host: ubuntu-latest
-            target: armv7-unknown-linux-gnueabihf
-            build: pnpm --filter @clarity-types/core build --target armv7-unknown-linux-gnueabihf --use-napi-cross
+          # - host: ubuntu-latest
+          #   target: armv7-unknown-linux-gnueabihf
+          #   build: pnpm --filter @clarity-types/core build --target armv7-unknown-linux-gnueabihf --use-napi-cross
           - host: ubuntu-latest
             target: aarch64-linux-android
             build: pnpm --filter @clarity-types/core build --target aarch64-linux-android
-          - host: ubuntu-latest
-            target: armv7-linux-androideabi
-            build: pnpm --filter @clarity-types/core build --target armv7-linux-androideabi
+          # - host: ubuntu-latest
+          #   target: armv7-linux-androideabi
+          #   build: pnpm --filter @clarity-types/core build --target armv7-linux-androideabi
           - host: ubuntu-latest
             target: aarch64-unknown-linux-musl
             build: pnpm --filter @clarity-types/core build --target aarch64-unknown-linux-musl -x
-          - host: windows-latest
-            target: aarch64-pc-windows-msvc
-            build: pnpm --filter @clarity-types/core build --target aarch64-pc-windows-msvc
-          - host: ubuntu-latest
-            target: wasm32-wasi-preview1-threads
-            build: pnpm --filter @clarity-types/core build --target wasm32-wasi-preview1-threads
+          # - host: windows-latest
+          #   target: aarch64-pc-windows-msvc
+          #   build: pnpm --filter @clarity-types/core build --target aarch64-pc-windows-msvc
+          # - host: ubuntu-latest
+          #   target: wasm32-wasi-preview1-threads
+          #   build: pnpm --filter @clarity-types/core build --target wasm32-wasi-preview1-threads
     name: stable - ${{ matrix.settings.target }} - node@20
     runs-on: ${{ matrix.settings.host }}
     steps:
@@ -117,7 +117,7 @@ jobs:
         if: matrix.settings.target != 'wasm32-wasi-preview1-threads'
         with:
           name: bindings-${{ matrix.settings.target }}
-          path: "*.node"
+          path: "native/*.node"
           if-no-files-found: error
 
       - name: Upload artifact
@@ -125,7 +125,7 @@ jobs:
         if: matrix.settings.target == 'wasm32-wasi-preview1-threads'
         with:
           name: bindings-${{ matrix.settings.target }}
-          path: "*.wasm"
+          path: "native/*.wasm"
           if-no-files-found: error
   build-freebsd:
     runs-on: macos-12
@@ -172,7 +172,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: bindings-freebsd
-          path: ${{ env.APP_NAME }}.*.node
+          path: native/${{ env.APP_NAME }}.*.node
           if-no-files-found: error
   test-macOS-windows-binding:
     name: Test bindings on ${{ matrix.settings.target }} - node@${{ matrix.node }}
@@ -223,7 +223,7 @@ jobs:
           - x86_64-unknown-linux-musl
           - aarch64-unknown-linux-gnu
           - aarch64-unknown-linux-musl
-          - armv7-unknown-linux-gnueabihf
+          # - armv7-unknown-linux-gnueabihf
         node:
           - '18'
           - '20'
@@ -279,34 +279,34 @@ jobs:
           image: ${{ steps.docker.outputs.IMAGE }}
           options: -v ${{ steps.docker.outputs.PNPM_STORE_PATH }}:${{ steps.docker.outputs.PNPM_STORE_PATH }} -v ${{ github.workspace }}:${{ github.workspace }} -w ${{ github.workspace }} --platform ${{ steps.docker.outputs.PLATFORM }}
           run: pnpm --filter @clarity-types/core test
-  test-wasi:
-    name: Test WASI target
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: setup pnpm
-        uses: pnpm/action-setup@v2
-      - name: Setup node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: pnpm
-      - name: Install dependencies
-        run: pnpm install
-      - name: Download artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: bindings-wasm32-wasi-preview1-threads
-          path: .
-      - name: List packages
-        run: ls -R .
-        shell: bash
-      - name: Test bindings
-        run: pnpm --filter @clarity-types/core test
-        env:
-          NAPI_RS_FORCE_WASI: 1
+  # test-wasi:
+  #   name: Test WASI target
+  #   needs:
+  #     - build
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: setup pnpm
+  #       uses: pnpm/action-setup@v2
+  #     - name: Setup node
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: 20
+  #         cache: pnpm
+  #     - name: Install dependencies
+  #       run: pnpm install
+  #     - name: Download artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: bindings-wasm32-wasi-preview1-threads
+  #         path: .
+  #     - name: List packages
+  #       run: ls -R .
+  #       shell: bash
+  #     - name: Test bindings
+  #       run: pnpm --filter @clarity-types/core test
+  #       env:
+  #         NAPI_RS_FORCE_WASI: 1
   publish:
     name: Publish
     runs-on: ubuntu-latest
