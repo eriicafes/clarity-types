@@ -1,64 +1,15 @@
 {
-  "name": "clarity-types",
+  "name": "clarity-types-monorepo",
+  "description": "Generate typescript types from clarity smart contract",
   "version": "0.1.0",
-  "main": "./dist/index.js",
-  "module": "./dist/index.mjs",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/index.mjs",
-      "default": "./dist/index.js"
-    }
-  },
-  "bin": "./dist/bin.js",
-  "napi": {
-    "name": "clarity-types",
-    "triples": {
-      "additional": [
-        "aarch64-apple-darwin",
-        "aarch64-linux-android",
-        "aarch64-unknown-linux-gnu",
-        "aarch64-unknown-linux-musl",
-        "aarch64-pc-windows-msvc",
-        "armv7-unknown-linux-gnueabihf",
-        "x86_64-unknown-linux-musl",
-        "x86_64-unknown-freebsd",
-        "i686-pc-windows-msvc",
-        "armv7-linux-androideabi",
-        "universal-apple-darwin",
-        "riscv64gc-unknown-linux-gnu"
-      ]
-    }
-  },
   "license": "MIT",
-  "engines": {
-    "node": ">= 10"
-  },
   "scripts": {
-    "build:bin": "tsc -p tsconfig.bin.json",
-    "build:lib": "tsup src/index.ts --format esm,cjs --dts",
-    "build": "tsc --noEmit && shx rm -rf dist && pnpm build:lib && pnpm build:bin",
-    "release": "pnpm run build && changeset publish",
-    "napi:artifacts": "napi artifacts",
-    "napi:build": "napi build --platform --release -p native --cargo-name native --js native.js --dts native.d.ts",
-    "napi:build:debug": "napi build --platform -p native --cargo-name native --js native.js --dts native.d.ts",
-    "napi:universal": "napi universal",
-    "napi:version": "napi version",
-    "prepublishOnly": "napi prepublish -t npm"
+    "release": "pnpm run build && changeset publish"
   },
+  "author": "Eric Afes <eriicafes@gmail.com>",
   "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
   "devDependencies": {
-    "@changesets/cli": "^2.27.1",
-    "@napi-rs/cli": "^2.18.0",
-    "@types/node": "^20.11.21",
-    "commandstruct": "^0.3.0",
-    "rollup": "^4.12.0",
-    "shx": "^0.3.4",
-    "tsup": "^8.0.2",
-    "typescript": "^5.3.3"
-  },
-  "peerDependencies": {
-    "@stacks/transactions": "^6.x"
+    "@changesets/cli": "^2.27.1"
   }
 }

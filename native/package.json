@@ -1,0 +1,49 @@
+{
+  "name": "@clarity-types/core",
+  "description": "Generate typescript types from clarity smart contract",
+  "version": "0.1.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "napi": {
+    "binaryName": "clarity-types",
+    "targets": [
+      "aarch64-apple-darwin",
+      "aarch64-linux-android",
+      "aarch64-unknown-linux-gnu",
+      "aarch64-unknown-linux-musl",
+      "aarch64-pc-windows-msvc",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "x86_64-unknown-freebsd",
+      "x86_64-pc-windows-msvc",
+      "i686-pc-windows-msvc",
+      "armv7-linux-androideabi",
+      "armv7-unknown-linux-gnueabihf",
+      "wasm32-wasi-preview1-threads"
+    ]
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "universal": "napi universal",
+    "version": "napi version",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "echo \"No tests specified\""
+  },
+  "author": "Eric Afes <eriicafes@gmail.com>",
+  "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "devDependencies": {
+    "@napi-rs/cli": "^3.0.0-alpha.34"
+  }
+}
