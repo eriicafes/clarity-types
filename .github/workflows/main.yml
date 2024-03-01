@@ -330,11 +330,11 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: native/artifacts
-      - name: List artifacts
-        run: ls -R native/artifacts
-        shell: bash
       - name: create npm dirs
         run: pnpm --filter @clarity-types/core napi create-npm-dirs
+      - name: List npm dirs
+        run: ls -la ./npm
+        shell: bash
       - name: Move artifacts
         run: pnpm --filter @clarity-types/core artifacts
       - name: List packages
