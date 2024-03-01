@@ -331,10 +331,7 @@ jobs:
         with:
           path: native/artifacts
       - name: create npm dirs
-        run: pnpm --filter @clarity-types/core napi create-npm-dirs
-      - name: List npm dirs
-        run: ls -la ./npm
-        shell: bash
+        run: pnpm --filter @clarity-types/core exec napi create-npm-dirs
       - name: Move artifacts
         run: pnpm --filter @clarity-types/core artifacts
       - name: List packages
