@@ -14,13 +14,13 @@ importers:
 
   clarity-types-ts:
     dependencies:
+      '@clarity-types/core':
+        specifier: workspace:*
+        version: link:../native
       '@stacks/transactions':
         specifier: ^6.x
         version: 6.12.0
     devDependencies:
-      '@clarity-types/core':
-        specifier: workspace:*
-        version: link:../native
       '@types/node':
         specifier: ^20.11.21
         version: 20.11.22
