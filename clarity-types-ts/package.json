@@ -22,8 +22,10 @@
   "author": "Eric Afes <eriicafes@gmail.com>",
   "repository": "git+https://github.com/eriicafes/clarity-types.git",
   "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "dependencies": {
+    "@clarity-types/core": "workspace:*"
+  },
   "devDependencies": {
-    "@clarity-types/core": "workspace:*",
     "@types/node": "^20.11.21",
     "commandstruct": "^0.3.0",
     "shx": "^0.3.4",

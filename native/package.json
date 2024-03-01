@@ -38,5 +38,14 @@
   "homepage": "https://github.com/eriicafes/clarity-types#readme",
   "devDependencies": {
     "@napi-rs/cli": "^3.0.0-alpha.34"
+  },
+  "optionalDependencies": {
+    "@clarity-types/core-darwin-arm64": "0.1.0",
+    "@clarity-types/core-android-arm64": "0.1.0",
+    "@clarity-types/core-linux-arm64-musl": "0.1.0",
+    "@clarity-types/core-darwin-x64": "0.1.0",
+    "@clarity-types/core-linux-x64-gnu": "0.1.0",
+    "@clarity-types/core-linux-x64-musl": "0.1.0",
+    "@clarity-types/core-win32-x64-msvc": "0.1.0"
   }
 }
