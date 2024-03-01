@@ -335,7 +335,7 @@ jobs:
       - name: Move artifacts
         run: pnpm --filter @clarity-types/core artifacts
       - name: List packages
-        run: ls -R ./npm
+        run: ls -R ./native/npm
         shell: bash
       - name: Create Release Pull Request or Publish
         id: changesets
