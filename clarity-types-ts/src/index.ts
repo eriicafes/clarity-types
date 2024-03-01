@@ -19,8 +19,8 @@ export type ContractCallOptions<T extends ContractDef> = { [K in keyof T as Excl
 
 export interface Contract<T extends ContractDef> {
     callOptions(options: ContractCallOptions<T>): {
-        contractAddress: string;
         contractName: string;
+        contractAddress: string;
         functionName: string;
         functionArgs: ClarityValue[];
     }
