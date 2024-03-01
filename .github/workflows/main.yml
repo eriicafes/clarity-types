@@ -127,62 +127,53 @@ jobs:
           name: bindings-${{ matrix.settings.target }}
           path: "native/*.wasm"
           if-no-files-found: error
-  build-freebsd:
-    runs-on: macos-12
-    name: Build FreeBSD
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build
-        id: build
-        uses: cross-platform-actions/action@v0.22.0
-        env:
-          DEBUG: napi:*
-          RUSTUP_IO_THREADS: 1
-        with:
-          operating_system: freebsd
-          version: '13.2'
-          memory: 8G
-          cpu_count: 3
-          environment_variables: 'DEBUG RUSTUP_IO_THREADS'
-          shell: bash
-          run: |
-            sudo pkg install -y -f curl node libnghttp2 npm llvm
-            echo "verifying libclang installation"
-            echo "print LD_LIBRARY_PATH"
-            ldconfig -r | grep libclang
-            echo path $LD_LIBRARY_PATH
-            export LD_LIBRARY_PATH=/usr/local/llvm15/lib:$LD_LIBRARY_PATH
-            sudo ldconfig
-            echo "print updated LD_LIBRARY_PATH"
-            ldconfig -r | grep libclang
-            echo path $LD_LIBRARY_PATH
-            sudo npm install -g corepack
-            curl https://sh.rustup.rs -sSf --output rustup.sh
-            sh rustup.sh -y --profile minimal --default-toolchain beta
-            corepack prepare
-            corepack enable
-            source "$HOME/.cargo/env"
-            echo "~~~~ rustc --version ~~~~"
-            rustc --version
-            echo "~~~~ node -v ~~~~"
-            node -v
-            echo "~~~~ pnpm --version ~~~~"
-            pnpm --version
-            pwd
-            ls -lah
-            whoami
-            env
-            freebsd-version
-            pnpm install
-            pnpm --filter @clarity-types/core build
-            rm -rf node_modules
-            rm -rf target
-      - name: Upload artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: bindings-freebsd
-          path: native/${{ env.APP_NAME }}.*.node
-          if-no-files-found: error
+  # build-freebsd:
+  #   runs-on: macos-12
+  #   name: Build FreeBSD
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Build
+  #       id: build
+  #       uses: cross-platform-actions/action@v0.22.0
+  #       env:
+  #         DEBUG: napi:*
+  #         RUSTUP_IO_THREADS: 1
+  #       with:
+  #         operating_system: freebsd
+  #         version: '13.2'
+  #         memory: 8G
+  #         cpu_count: 3
+  #         environment_variables: 'DEBUG RUSTUP_IO_THREADS'
+  #         shell: bash
+  #         run: |
+  #           sudo pkg install -y -f curl node libnghttp2 npm
+  #           sudo npm install -g corepack
+  #           curl https://sh.rustup.rs -sSf --output rustup.sh
+  #           sh rustup.sh -y --profile minimal --default-toolchain beta
+  #           corepack prepare
+  #           corepack enable
+  #           source "$HOME/.cargo/env"
+  #           echo "~~~~ rustc --version ~~~~"
+  #           rustc --version
+  #           echo "~~~~ node -v ~~~~"
+  #           node -v
+  #           echo "~~~~ pnpm --version ~~~~"
+  #           pnpm --version
+  #           pwd
+  #           ls -lah
+  #           whoami
+  #           env
+  #           freebsd-version
+  #           pnpm install
+  #           pnpm --filter @clarity-types/core build
+  #           rm -rf node_modules
+  #           rm -rf target
+  #     - name: Upload artifact
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: bindings-freebsd
+  #         path: native/${{ env.APP_NAME }}.*.node
+  #         if-no-files-found: error
   test-macOS-windows-binding:
     name: Test bindings on ${{ matrix.settings.target }} - node@${{ matrix.node }}
     needs:
@@ -320,7 +311,7 @@ jobs:
     name: Publish
     runs-on: ubuntu-latest
     needs:
-      - build-freebsd
+      # - build-freebsd
       - test-macOS-windows-binding
       - test-linux-binding
       # - test-wasi

@@ -3,4 +3,4 @@
 "@clarity-types/core": patch
 ---
 
-Add public workflow
+Add publish workflow
