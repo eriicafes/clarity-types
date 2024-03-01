@@ -329,7 +329,7 @@ jobs:
       - name: Download all artifacts
         uses: actions/download-artifact@v4
         with:
-          path: artifacts
+          path: native/artifacts
       - name: create npm dirs
         run: pnpm --filter @clarity-types/core napi create-npm-dirs
       - name: Move artifacts
