@@ -151,7 +151,7 @@ jobs:
             echo "print LD_LIBRARY_PATH"
             ldconfig -r | grep libclang
             echo path $LD_LIBRARY_PATH
-            export LD_LIBRARY_PATH=/path/to/your/lib:$(ldconfig -r | grep libclang | tr -d '\n')
+            export LD_LIBRARY_PATH=/usr/local/llvm15/lib:$LD_LIBRARY_PATH
             sudo ldconfig
             echo "print updated LD_LIBRARY_PATH"
             ldconfig -r | grep libclang
