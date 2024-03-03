@@ -4,7 +4,9 @@
   "version": "0.1.0",
   "license": "MIT",
   "scripts": {
-    "release": "pnpm run build && changeset publish"
+    "build:main": "pnpm --filter clarity-types run build",
+    "build:native": "pnpm --filter @clarity-types/core run build",
+    "release": "pnpm build:native && pnpm build:main && changeset publish"
   },
   "author": "Eric Afes <eriicafes@gmail.com>",
   "repository": "git+https://github.com/eriicafes/clarity-types.git",
