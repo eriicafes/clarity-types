@@ -20,13 +20,13 @@ importers:
       '@stacks/transactions':
         specifier: ^6.x
         version: 6.12.0
+      commandstruct:
+        specifier: ^0.3.0
+        version: 0.3.0(hollywood-di@0.5.2)(sade@1.8.1)
     devDependencies:
       '@types/node':
         specifier: ^20.11.21
         version: 20.11.24
-      commandstruct:
-        specifier: ^0.3.0
-        version: 0.3.0(hollywood-di@0.5.2)(sade@1.8.1)
       shx:
         specifier: ^0.3.4
         version: 0.3.4
@@ -1627,7 +1627,7 @@ packages:
     dependencies:
       hollywood-di: 0.5.2
       sade: 1.8.1
-    dev: true
+    dev: false
 
   /concat-map@0.0.1:
     resolution: {integrity: sha512-/Srv4dswyQNBfohGpz9o6Yb3Gz3SrUDqBH5rTuhGR7ahtlbYKnVxw2bCFMRljaA7EXHaXZ8wsHdodFvbkhKmqg==}
@@ -2189,7 +2189,7 @@ packages:
 
   /hollywood-di@0.5.2:
     resolution: {integrity: sha512-e4zVYz+Q0ExJnOTsX3MPy8vJLXcX5CmrmK5y1hY66quOq0AHJJE/G3Vw7ZHa/Z0Ac7aFjnRVpakAQwOjWsbykA==}
-    dev: true
+    dev: false
 
   /hosted-git-info@2.8.9:
     resolution: {integrity: sha512-mxIDAb9Lsm6DoOJ7xH+5+X4y1LU/4Hi50L9C5sIswK3JzULS4bwk1FvjdBgvYR4bzT4tuUQiC15FE2f5HbLvYw==}
@@ -2669,7 +2669,7 @@ packages:
   /mri@1.2.0:
     resolution: {integrity: sha512-tzzskb3bG8LvYGFF/mDTpq3jpI6Q9wc3LEmBaghu+DdCssd1FakN7Bc0hVNmEyGq1bq3RgfkCb3cmQLpNPOroA==}
     engines: {node: '>=4'}
-    dev: true
+    dev: false
 
   /ms@2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
@@ -3101,7 +3101,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       mri: 1.2.0
-    dev: true
+    dev: false
 
   /safe-array-concat@1.1.0:
     resolution: {integrity: sha512-ZdQ0Jeb9Ofti4hbt5lX3T2JcAamT9hfzYU1MNB+z/jaEbB6wfFfPIR/zEORmZqobkCCJhSjodobH6WHNmJ97dg==}

@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import { arg, createSingleProgram, flag } from "commandstruct"
 import fs from "fs"
 import process from "process"

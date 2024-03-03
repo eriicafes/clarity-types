@@ -444,7 +444,7 @@ dependencies = [
 
 [[package]]
 name = "clarity-types"
-version = "0.1.1"
+version = "1.0.0"
 dependencies = [
  "clap",
  "clarity",
@@ -452,7 +452,7 @@ dependencies = [
 
 [[package]]
 name = "clarity-types-native"
-version = "0.1.1"
+version = "1.0.0"
 dependencies = [
  "clarity-types",
  "napi",

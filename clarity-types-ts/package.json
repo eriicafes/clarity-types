@@ -23,11 +23,11 @@
   "repository": "git+https://github.com/eriicafes/clarity-types.git",
   "homepage": "https://github.com/eriicafes/clarity-types#readme",
   "dependencies": {
-    "@clarity-types/core": "workspace:*"
+    "@clarity-types/core": "workspace:*",
+    "commandstruct": "^0.3.0"
   },
   "devDependencies": {
     "@types/node": "^20.11.21",
-    "commandstruct": "^0.3.0",
     "shx": "^0.3.4",
     "tsup": "^8.0.2",
     "typescript": "^5.3.3"
