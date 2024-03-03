@@ -1,0 +1,22 @@
+{
+  "name": "@clarity-types/core-darwin-arm64",
+  "version": "0.1.0",
+  "cpu": [
+    "arm64"
+  ],
+  "main": "clarity-types.darwin-arm64.node",
+  "files": [
+    "clarity-types.darwin-arm64.node"
+  ],
+  "description": "Generate typescript types from clarity smart contract",
+  "author": "Eric Afes <eriicafes@gmail.com>",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "os": [
+    "darwin"
+  ]
+}
