@@ -1,8 +1,8 @@
-# Clarity types CLI
+# Clarity types
 
 ## Introduction
 
-`clarity-types` is a rust CLI that generates typescript types from a clarity smart contract. This CLI wraps the clarity vm and will automatically check your clarity contract for correctness before outputting types.
+`clarity-types` is a rust based library/CLI that generates typescript types from a clarity smart contract. It wraps the clarity vm and will automatically check your clarity contract for correctness before outputting types.
 
 ## Installation
 

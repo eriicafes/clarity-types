@@ -33,3 +33,5 @@ export function defineContract<T extends ContractDef>(baseOptions: ContractBaseO
         },
     }
 }
+
+export { parse, parseMem } from "@clarity-types/core"

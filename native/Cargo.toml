@@ -9,7 +9,7 @@ crate-type = ["cdylib"]
 [dependencies]
 napi = "2"
 napi-derive = "2"
-clarity-types = { path = "../clarity-types" }
+clarity-types = { path = "../clarity-types-rs" }
 
 [build-dependencies]
 napi-build = "2"

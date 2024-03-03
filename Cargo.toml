@@ -1,7 +1,7 @@
 [workspace]
 resolver = "2"
 members = [
-    "clarity-types",
+    "clarity-types-rs",
     "native",
 ]
 
