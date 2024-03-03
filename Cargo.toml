@@ -1,10 +1,13 @@
-[package]
-name = "clarity-types"
-version = "0.1.0"
-edition = "2021"
+[workspace]
+resolver = "2"
+members = [
+    "clarity-types",
+    "native",
+]
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+lto = true
+strip = "symbols"
 
-[dependencies]
-clap = { version = "4.4.11", features = ["derive"] }
-clarity = { git = "https://github.com/stacks-network/stacks-core", branch = "feat/clarity-wasm-next" }
+[profile.release.package.clarity-types-native]
+codegen-units = 1

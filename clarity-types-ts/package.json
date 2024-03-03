@@ -1,0 +1,38 @@
+{
+  "name": "clarity-types",
+  "description": "Generate typescript types from clarity smart contract",
+  "version": "0.1.0",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "default": "./dist/index.js"
+    }
+  },
+  "bin": "./dist/bin.js",
+  "scripts": {
+    "build:bin": "tsup-node src/bin.ts --format cjs",
+    "build:lib": "tsup src/index.ts --format esm,cjs --dts",
+    "build": "shx rm -rf dist && pnpm build:bin && pnpm build:lib"
+  },
+  "license": "MIT",
+  "author": "Eric Afes <eriicafes@gmail.com>",
+  "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "dependencies": {
+    "@clarity-types/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.21",
+    "commandstruct": "^0.3.0",
+    "shx": "^0.3.4",
+    "tsup": "^8.0.2",
+    "typescript": "^5.3.3"
+  },
+  "peerDependencies": {
+    "@stacks/transactions": "^6.x"
+  }
+}

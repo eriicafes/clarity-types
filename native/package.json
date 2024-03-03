@@ -1,0 +1,51 @@
+{
+  "name": "@clarity-types/core",
+  "description": "Generate typescript types from clarity smart contract",
+  "version": "0.1.0",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": [
+    "index.js",
+    "index.d.ts"
+  ],
+  "napi": {
+    "binaryName": "clarity-types",
+    "targets": [
+      "aarch64-apple-darwin",
+      "aarch64-linux-android",
+      "aarch64-unknown-linux-musl",
+      "x86_64-apple-darwin",
+      "x86_64-unknown-linux-gnu",
+      "x86_64-unknown-linux-musl",
+      "x86_64-pc-windows-msvc"
+    ]
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "universal": "napi universal",
+    "version": "napi version",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "echo \"No tests specified\""
+  },
+  "author": "Eric Afes <eriicafes@gmail.com>",
+  "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "devDependencies": {
+    "@napi-rs/cli": "^3.0.0-alpha.34"
+  },
+  "optionalDependencies": {
+    "@clarity-types/core-darwin-arm64": "0.1.0",
+    "@clarity-types/core-android-arm64": "0.1.0",
+    "@clarity-types/core-linux-arm64-musl": "0.1.0",
+    "@clarity-types/core-darwin-x64": "0.1.0",
+    "@clarity-types/core-linux-x64-gnu": "0.1.0",
+    "@clarity-types/core-linux-x64-musl": "0.1.0",
+    "@clarity-types/core-win32-x64-msvc": "0.1.0"
+  }
+}

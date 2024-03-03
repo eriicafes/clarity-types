@@ -1,0 +1,16 @@
+{
+  "name": "clarity-types-monorepo",
+  "description": "Generate typescript types from clarity smart contract",
+  "version": "0.1.0",
+  "license": "MIT",
+  "scripts": {
+    "release": "pnpm run build && changeset publish"
+  },
+  "author": "Eric Afes <eriicafes@gmail.com>",
+  "repository": "git+https://github.com/eriicafes/clarity-types.git",
+  "homepage": "https://github.com/eriicafes/clarity-types#readme",
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1"
+  },
+  "packageManager": "pnpm@8.14.1"
+}

@@ -1,0 +1,15 @@
+[package]
+name = "clarity-types-native"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+napi = "2"
+napi-derive = "2"
+clarity-types = { path = "../clarity-types" }
+
+[build-dependencies]
+napi-build = "2"
