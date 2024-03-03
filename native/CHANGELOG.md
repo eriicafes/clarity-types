@@ -1,5 +1,11 @@
 # @clarity-types/core
 
+## 1.0.1
+
+### Patch Changes
+
+- 68ec3db: Update README
+
 ## 1.0.0
 
 ### Major Changes

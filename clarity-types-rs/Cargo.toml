@@ -1,6 +1,6 @@
 [package]
 name = "clarity-types"
-version = "1.0.0"
+version = "1.0.1"
 edition = "2021"
 description = "Generate typescript types from clarity smart contract"
 license = "MIT"
