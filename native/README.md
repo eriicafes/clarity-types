@@ -13,25 +13,25 @@ npm i @clarity-types/core
 ## Usage
 
 ```ts
-import { parse, parseMem } from "@clarity-types/core"
+import { parse, parseMem } from "@clarity-types/core";
 
 // parse contract from filesystem
 const result = parse(
-    contractPath    // string,
-    traitDir        // string | undefined | null,
-    contractName    // string | undefined | null,
-    clarityVersion  // "clarity1" | "clarity2" | undefined,
-)
-console.log(result)
+  contractPath, // string
+  traitDir, // string | undefined | null
+  contractName, // string | undefined | null
+  clarityVersion // "clarity1" | "clarity2" | undefined
+);
+console.log(result);
 
 // or parse contract from in-memory string
 const result = parseMem(
-    contractSource  // string,
-    traits          // Record<string, string>,
-    contractName    // string,
-    clarityVersion  // "clarity1" | "clarity2" | undefined,
-)
-console.log(result)
+  contractSource, // string
+  traits, // Record<string, string>
+  contractName, // string
+  clarityVersion // "clarity1" | "clarity2" | undefined
+);
+console.log(result);
 ```
 
 ## Authors

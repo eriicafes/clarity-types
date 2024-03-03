@@ -15,22 +15,22 @@ npm i clarity-types
 After [generating typescript types](#codegen-usage), import and use like below.
 
 ```ts
-import { openContractCall } from "@stacks/connect"
-import { defineContract } from "clarity-types"
-import { Gm } from "../contracts/gm.clar"
+import { openContractCall } from "@stacks/connect";
+import { defineContract } from "clarity-types";
+import { Gm } from "../contracts/gm.ts";
 
 const gmContract = defineContract<Gm>({
-    contractName: // contract name,
-    contractAddress: // contract address,
-})
+  contractName, // contract name
+  contractAddress, // contract address
+});
 
 openContractCall({
-    ...gmContract.callOptions({
-        functionName: // function name;
-        functionArgs: // function args;
-    })
-    // ...other options
-})
+  ...gmContract.callOptions({
+    functionName, // function name
+    functionArgs, // function args
+  }),
+  // ...other options
+});
 ```
 
 callOptions returns the below shape and can be safely spread into openContractCall options.
@@ -76,25 +76,25 @@ npx clarity-types contracts/gm.clar --type-name GmContract
 ### Using typescript library
 
 ```ts
-import { parse, parseMem } from "clarity-types"
+import { parse, parseMem } from "clarity-types";
 
 // parse contract from filesystem
 const result = parse(
-    contractPath    // string,
-    traitDir        // string | undefined | null,
-    contractName    // string | undefined | null,
-    clarityVersion  // "clarity1" | "clarity2" | undefined,
-)
-console.log(result)
+  contractPath, // string
+  traitDir, // string | undefined | null
+  contractName, // string | undefined | null
+  clarityVersion // "clarity1" | "clarity2" | undefined
+);
+console.log(result);
 
 // or parse contract from in-memory string
 const result = parseMem(
-    contractSource  // string,
-    traits          // Record<string, string>,
-    contractName    // string,
-    clarityVersion  // "clarity1" | "clarity2" | undefined,
-)
-console.log(result)
+  contractSource, // string
+  traits, // Record<string, string>
+  contractName, // string
+  clarityVersion // "clarity1" | "clarity2" | undefined
+);
+console.log(result);
 ```
 
 ## Authors

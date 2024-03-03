@@ -40,19 +40,19 @@ use clarity_types::{parse, parse_mem};
 
 // parse contract from filesystem
 let result = parse(
-    contract_path   // PathBuf,
-    trait_dir       // Option<PathBuf>,
-    contract_name   // Option<String>,
-    clarity_version // Option<ClarityVersion>,
+    contract_path, // PathBuf
+    trait_dir, // Option<PathBuf>
+    contract_name, // Option<String>
+    clarity_version // Option<ClarityVersion>
 );
 println!("{result}");
 
 // or parse contract from in-memory string
 let result = parse_mem(
-    contract_source // String,
-    traits          // HashMap<String, String>,
-    contract_name   // String,
-    clarity_version // Option<ClarityVersion>,
+    contract_source, // String
+    traits, // HashMap<String, String>
+    contract_name, // String
+    clarity_version // Option<ClarityVersion>
 );
 println!("{result}");
 ```
