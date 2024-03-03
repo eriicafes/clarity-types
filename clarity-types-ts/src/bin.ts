@@ -2,9 +2,10 @@ import { arg, createSingleProgram, flag } from "commandstruct"
 import fs from "fs"
 import process from "process"
 import { parse } from "@clarity-types/core"
+import packageJson from "../package.json"
 
 const prog = createSingleProgram("clarity-types")
-    .version("0.1.0")
+    .version(packageJson.version)
     .args({
         input: arg(),
         output: arg().optional()

@@ -14,7 +14,7 @@
   },
   "bin": "./dist/bin.js",
   "scripts": {
-    "build:bin": "tsc -p tsconfig.bin.json",
+    "build:bin": "tsup-node src/bin.ts --format cjs",
     "build:lib": "tsup src/index.ts --format esm,cjs --dts",
     "build": "shx rm -rf dist && pnpm build:bin && pnpm build:lib"
   },
