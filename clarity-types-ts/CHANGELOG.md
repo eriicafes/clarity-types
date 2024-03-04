@@ -1,5 +1,15 @@
 # clarity-types
 
+## 1.0.3
+
+### Patch Changes
+
+- 8b8a18f: Fix tuple keys representation
+- 98743fb: Update cargo workspace member versions after version bump
+- Updated dependencies [8b8a18f]
+- Updated dependencies [98743fb]
+  - @clarity-types/core@1.0.2
+
 ## 1.0.2
 
 ### Patch Changes

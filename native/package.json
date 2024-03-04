@@ -1,7 +1,7 @@
 {
   "name": "@clarity-types/core",
   "description": "Generate typescript types from clarity smart contract",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "index.js",
   "types": "index.d.ts",
   "files": [
