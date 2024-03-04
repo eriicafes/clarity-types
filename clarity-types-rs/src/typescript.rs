@@ -192,7 +192,7 @@ impl IntoTypescriptType for TypeSignature {
         let fields_iter = inner
           .get_type_map()
           .iter()
-          .map(|(name, value)| format!("{}: {}", name, value.into_ts_type(reporter)));
+          .map(|(name, value)| format!("{}: {}", utils::to_js_key(name), value.into_ts_type(reporter)));
         format!(
           "TupleCV<{{ {} }}>",
           fields_iter.collect::<Vec<_>>().join(", ")
