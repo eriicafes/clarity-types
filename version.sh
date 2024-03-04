@@ -12,3 +12,5 @@ echo "New version for 'native/package.json' is $NATIVE_NEW_VERSION"
 echo "Updating 'native/Cargo.toml'"
 awk -v new_version="\"$NATIVE_NEW_VERSION\"" '!done {done=sub("version = \".*\"", "version = "new_version"")} 1' native/Cargo.toml \
     > native/Cargo.temp.toml && mv native/Cargo.temp.toml native/Cargo.toml
+
+cargo update -w
