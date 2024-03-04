@@ -23,6 +23,12 @@ importers:
       commandstruct:
         specifier: ^0.3.0
         version: 0.3.0(hollywood-di@0.5.2)(sade@1.8.1)
+      hollywood-di:
+        specifier: ^0.5.2
+        version: 0.5.2
+      sade:
+        specifier: ^1.8.1
+        version: 1.8.1
     devDependencies:
       '@types/node':
         specifier: ^20.11.21
