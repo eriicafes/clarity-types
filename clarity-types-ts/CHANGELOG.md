@@ -1,5 +1,11 @@
 # clarity-types
 
+## 1.0.2
+
+### Patch Changes
+
+- fbe7b5d: Fix peer dependency resolution error
+
 ## 1.0.1
 
 ### Patch Changes
