@@ -12,4 +12,4 @@ homepage = "https://github.com/eriicafes/clarity-types#readme"
 
 [dependencies]
 clap = { version = "4.4.11", features = ["derive"] }
-clarity = { git = "https://github.com/stacks-network/stacks-core", branch = "feat/clarity-wasm-next" }
+clarity = { git = "https://github.com/stacks-network/stacks-core", rev = "524b0e1ae9ad3c8d2d2ac37e72be4aee2c045ef8" }
