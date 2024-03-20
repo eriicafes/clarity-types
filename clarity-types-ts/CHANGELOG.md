@@ -1,5 +1,14 @@
 # clarity-types
 
+## 1.0.4
+
+### Patch Changes
+
+- 1f979d2: Seperate parse functions for better tree shaking
+- 4774081: Pin clarity vm version
+- Updated dependencies [4774081]
+  - @clarity-types/core@1.0.3
+
 ## 1.0.3
 
 ### Patch Changes
