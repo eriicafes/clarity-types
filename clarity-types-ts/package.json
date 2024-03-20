@@ -10,13 +10,19 @@
       "types": "./dist/index.d.ts",
       "import": "./dist/index.mjs",
       "default": "./dist/index.js"
+    },
+    "./parse": {
+      "types": "./dist/parse.d.ts",
+      "import": "./dist/parse.mjs",
+      "default": "./dist/parse.js"
     }
   },
   "bin": "./dist/bin.js",
   "scripts": {
     "build:bin": "tsup-node src/bin.ts --format cjs",
+    "build:parse": "tsup src/parse.ts --format esm,cjs --dts",
     "build:lib": "tsup src/index.ts --format esm,cjs --dts",
-    "build": "shx rm -rf dist && pnpm build:bin && pnpm build:lib"
+    "build": "shx rm -rf dist && pnpm build:bin && pnpm build:lib && pnpm build:parse"
   },
   "license": "MIT",
   "author": "Eric Afes <eriicafes@gmail.com>",

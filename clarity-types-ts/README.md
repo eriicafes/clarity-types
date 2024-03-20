@@ -76,7 +76,7 @@ npx clarity-types contracts/gm.clar --type-name GmContract
 ### Using typescript library
 
 ```ts
-import { parse, parseMem } from "clarity-types";
+import { parse, parseMem } from "clarity-types/parse";
 
 // parse contract from filesystem
 const result = parse(
