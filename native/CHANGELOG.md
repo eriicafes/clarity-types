@@ -1,5 +1,11 @@
 # @clarity-types/core
 
+## 1.0.3
+
+### Patch Changes
+
+- 4774081: Pin clarity vm version
+
 ## 1.0.2
 
 ### Patch Changes
